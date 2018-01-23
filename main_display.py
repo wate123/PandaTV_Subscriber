@@ -37,15 +37,15 @@ class MainDisplay:
         top_frame.columnconfigure(2,weight=2)
 
         bottom_frame = Frame(self.root)  # 下层frame用于手动获取最新订阅量
-        bottom_frame.pack(fill=X, side=BOTTOM)
+        bottom_frame.pack(fill=BOTH, side=BOTTOM)
         refresh_button = Button(bottom_frame, text='手动刷新',font="25")
         refresh_button.bind('<Button-1>', self.refresh)
-        refresh_button.grid(row=0,column=0,padx=20)
+        refresh_button.grid(row=0,column=0,sticky=("N", "S", "E", "W"))
         fans_button=Button(bottom_frame,text='当前订阅',font="25")
         fans_button.bind('<Button-1>', self.refresh_total_fans)
-        fans_button.grid(row=0,column=1)
-        top_frame.columnconfigure(0,weight=2)
-        top_frame.columnconfigure(1,weight=2)
+        fans_button.grid(row=0,column=1,sticky=("N", "S", "E", "W"))
+        bottom_frame.columnconfigure(0,weight=1)
+        bottom_frame.columnconfigure(1,weight=1)
         self.root.rowconfigure(0,weight=3)   # 调整widget位置
         self.root.rowconfigure(1,weight=1)
 
