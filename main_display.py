@@ -21,22 +21,31 @@ class MainDisplay:
         self.root.title('就是要莽')
         top_frame = Frame(self.root)  # 上层frame用于显示信息
         top_frame.pack(fill=BOTH)
-        text_label = Label(top_frame, text='今日订阅：  ',font="32")
+        self.label_text1 = StringVar()
+        self.label_text1.set('今日订阅:')
+        text_label = Label(top_frame, textvariable=self.label_text1,font="32")
         text_label.grid(row=0,sticky='w')
         self.cur_num = StringVar()   # 当前订阅数
         num_label = Label(top_frame, textvariable=self.cur_num,fg="red",font="28")
-        num_label.grid(row=0, column=1,sticky='w')
-        objective_label = Label(top_frame,text='/'+str(self.goal),font="28")
+        num_label.grid(row=0, column=1,sticky='e')
+        self.label_text2 = StringVar()
+        self.label_text2.set('/'+str(self.goal))
+        objective_label = Label(top_frame,textvariable=self.label_text2,font="28")
         objective_label.grid(row=0,column=2,sticky='w')
         top_frame.columnconfigure(0,weight=4)     # 调整widget位置
         top_frame.columnconfigure(1,weight=2)
-        top_frame.columnconfigure(1,weight=2)
+        top_frame.columnconfigure(2,weight=2)
 
         bottom_frame = Frame(self.root)  # 下层frame用于手动获取最新订阅量
         bottom_frame.pack(fill=X, side=BOTTOM)
         refresh_button = Button(bottom_frame, text='手动刷新',font="25")
         refresh_button.bind('<Button-1>', self.refresh)
-        refresh_button.pack(fill=BOTH)
+        refresh_button.grid(row=0,column=0,padx=20)
+        fans_button=Button(bottom_frame,text='当前订阅',font="25")
+        fans_button.bind('<Button-1>', self.refresh_total_fans)
+        fans_button.grid(row=0,column=1)
+        top_frame.columnconfigure(0,weight=2)
+        top_frame.columnconfigure(1,weight=2)
         self.root.rowconfigure(0,weight=3)   # 调整widget位置
         self.root.rowconfigure(1,weight=1)
 
@@ -47,6 +56,9 @@ class MainDisplay:
 
     def print_fans(self):
         self.cur_num.set(self.c.get_incresed_fans())
+        self.label_text1.set('今日订阅:')
+        self.label_text2.set('/'+str(self.goal))
+
 
     def refresh(self,event):
         t = threading.Thread(target=self.print_fans)
@@ -58,8 +70,22 @@ class MainDisplay:
             self.cur_num.set(self.c.get_incresed_fans())
             time.sleep(self.time_in_seconds)
 
+    def print_total_fans(self):
+        self.cur_num.set(self.c.get_fans_str())
+        self.label_text1.set('总订阅:')
+        self.label_text2.set('')
+        time.sleep(3)
+        self.print_fans()
+
+    def refresh_total_fans(self,event):
+        t = threading.Thread(target=self.print_total_fans)
+        t.daemon = True
+        t.start()
+
+
 if __name__ == '__main__':
     MainDisplay(10,1)
+
 
 
 
