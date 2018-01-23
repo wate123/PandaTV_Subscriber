@@ -1,0 +1,14 @@
+missing module named nt - imported by os, ntpath, shutil, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named org - imported by pickle, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named _winreg - imported by platform, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named java - imported by platform, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named 'java.lang' - imported by platform, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named winreg - imported by platform, mimetypes, urllib.request, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named 'org.python' - imported by copy, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py, xml.sax
+missing module named msvcrt - imported by subprocess, getpass, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named _winapi - imported by subprocess, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named _dummy_threading - imported by dummy_threading, /home/jun/PycharmProjects/PandaTV_Subscribe/crawl.py
+missing module named _scproxy - imported by urllib.request

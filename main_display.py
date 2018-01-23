@@ -83,8 +83,7 @@ class MainDisplay:
         t.start()
 
 
-if __name__ == '__main__':
-    MainDisplay(10,1)
+
 
 
 
