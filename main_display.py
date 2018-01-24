@@ -2,6 +2,7 @@ from tkinter import *
 from crawl import Crawl
 import threading
 import time
+import winsound
 
 class MainDisplay:
 
@@ -10,12 +11,13 @@ class MainDisplay:
             time = 刷新时间 （分钟）'''
         self.goal = goal
         self.time_in_seconds = time*60
+        self.today_maximum = -1 # 今日最高订阅数
         self.c = Crawl(goal)      # 初始化Crawler
         # 设置GUI界面
         self.root = Tk()
 
         ###########################     设置初始windows位置 ##################
-        self.root.geometry('220x45+40+560')         # 长 X  宽  + 向右平移 + 向下平移
+        self.root.geometry('220x55+40+560')         # 长 X  宽  + 向右平移 + 向下平移
         #####################################################################
 
         self.root.title('就是要莽')
@@ -40,10 +42,10 @@ class MainDisplay:
         bottom_frame.pack(fill=BOTH, side=BOTTOM)
         refresh_button = Button(bottom_frame, text='手动刷新',font="25")
         refresh_button.bind('<Button-1>', self.refresh)
-        refresh_button.grid(row=0,column=0,sticky=("N", "S", "E", "W"))
+        refresh_button.grid(row=0,column=0,sticky=("N", "S", "E", "W"),padx=4,pady=4)
         fans_button=Button(bottom_frame,text='当前订阅',font="25")
         fans_button.bind('<Button-1>', self.refresh_total_fans)
-        fans_button.grid(row=0,column=1,sticky=("N", "S", "E", "W"))
+        fans_button.grid(row=0,column=1,sticky=("N", "S", "E", "W"),padx=4,pady=4)
         bottom_frame.columnconfigure(0,weight=1)
         bottom_frame.columnconfigure(1,weight=1)
         self.root.rowconfigure(0,weight=3)   # 调整widget位置
@@ -55,10 +57,17 @@ class MainDisplay:
         self.root.mainloop()
 
     def print_fans(self):
-        self.cur_num.set(self.c.get_incresed_fans())
+        increased_fans = self.c.get_incresed_fans()
+        if increased_fans > self.today_maximum:     # 当订阅人数增加时，播放hello音效
+            threading.Thread(target=self.play_sound).start()
+            self.today_maximum = increased_fans
+        self.cur_num.set(increased_fans)
         self.label_text1.set('今日订阅:')
         self.label_text2.set('/'+str(self.goal))
 
+
+    def play_sound(self):
+        winsound.PlaySound('doorbell.wav',winsound.SND_FILENAME)
 
     def refresh(self,event):
         t = threading.Thread(target=self.print_fans)
