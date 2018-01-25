@@ -6,8 +6,8 @@
 *.xml
 *.pyc
 *.pyc
-/__pycache__/main_display.cpython-36.pyc
-/__pycache__/crawl.cpython-36.pyc
+.__pycache__
+.__pycache__
 .build
 .dist
 .idea
