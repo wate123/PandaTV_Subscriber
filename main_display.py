@@ -2,21 +2,26 @@ from tkinter import *
 from crawl import Crawl
 import threading
 import time
+import os.path
 from pygame import mixer
 
 class MainDisplay:
 
-    def __init__(self,goal,time):
+    def __init__(self,goal,time,room_id):
         '''goal = 今日订阅目标（增加量
-            time = 刷新时间 （分钟）'''
+            time = 刷新时间 （分钟）
+            room_id = 直播间ID'''
         self.goal = goal
         self.time_in_seconds = time*60
         self.today_maximum = -1 # 今日最高订阅数
-        self.c = Crawl(goal)      # 初始化Crawler
+        self.c = Crawl(goal,str(room_id))      # 初始化Crawler
         # 设置GUI界面
         self.root = Tk()
-        mixer.init()
-        mixer.music.load('doorbell.mp3')
+        if os.path.isfile('doorbell.mp3'):      # 在载入音乐前检查音乐是否存在
+            mixer.init()
+            mixer.music.load('doorbell.mp3')
+            self.has_music = True
+        else:   self.has_music = False
         ###########################     设置初始windows位置 ##################
         self.root.geometry('340x37+21+733')         # 长 X  宽  + 向右平移 + 向下平移
         #####################################################################
@@ -69,7 +74,8 @@ class MainDisplay:
 
 
     def play_sound(self):
-        mixer.music.play()
+        if self.has_music:
+            mixer.music.play()
 
     def refresh(self,event):
         t = threading.Thread(target=self.print_fans)

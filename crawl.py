@@ -5,7 +5,7 @@ class Crawl:
 
     def get_fans_str(self):
         '''刷新网页，返还str类型的访问数, i.e. '57' '''
-        request = urllib.request.Request(r'https://www.panda.tv/ajax_search?roomid=1778649')
+        request = urllib.request.Request(r'https://www.panda.tv/ajax_search?roomid='+self.room_id)
         response = urllib.request.urlopen(request)
         html = response.read().decode('utf-8')      # read from html
         reg_fan = r'"fans":[0-9]+'
@@ -44,14 +44,14 @@ class Crawl:
         else:
             self.starting_fans = start_from
 
-    def __init__(self, goal):
-        '''goal = 今日目标增长量'''
+    def __init__(self, goal,room_id):
+        '''goal = 今日目标增长量
+            roomdI-d = 直播间ID
+        '''
         self.goal = goal
+        self.room_id = room_id
         self.starting_fans = self.get_fans_int()
 
-    def __int__(self):
-        self.goal = 0
-        self.starting_fans = self.get_fans_int()
 
     # def start_count(self):
     #     while True:

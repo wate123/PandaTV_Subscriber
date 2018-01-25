@@ -55,7 +55,7 @@ class SettingDisplay:
 
         else:
             self.master.destroy()
-            self.app = MainDisplay(self.goal_entry_var.get(), self.refresh_time_entry_var.get())
+            self.app = MainDisplay(self.goal_entry_var.get(), self.refresh_time_entry_var.get(),1778649)    # 今日目标，刷新间隔，直播间ID
 
 
 def main():
