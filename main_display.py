@@ -10,7 +10,7 @@ class MainDisplay:
         '''goal = 今日订阅目标（增加量
             time = 刷新时间 （分钟）'''
         self.goal = goal
-        self.time_in_seconds = time*60
+        self.time_in_seconds = int(time*60)
         self.today_maximum = -1 # 今日最高订阅数
         self.c = Crawl(goal)      # 初始化Crawler
         # 设置GUI界面
