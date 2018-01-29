@@ -3,7 +3,8 @@ from crawl import Crawl
 import threading
 import time
 import os.path
-from pygame import mixer
+import pyaudio
+import wave
 
 class MainDisplay:
 
@@ -19,8 +20,6 @@ class MainDisplay:
         self.root = Tk()
         self.root.configure(background='#f3b513')
         if os.path.isfile('doorbell.mp3'):      # 在载入音乐前检查音乐是否存在
-            mixer.init()
-            mixer.music.load('doorbell.mp3')
             self.has_music = True
         else:   self.has_music = False
         ###########################     设置初始windows位置 ##################
@@ -58,7 +57,6 @@ class MainDisplay:
         right_frame.columnconfigure(1,weight=1)
         self.root.columnconfigure(0,minsize=50)
         self.root.columnconfigure(1,weight=1)   # 调整widget位置
-
         t = threading.Thread(target=self.start_crawl)   # 开始运行
         t.daemon = True
         t.start()
@@ -66,17 +64,33 @@ class MainDisplay:
 
     def print_fans(self):
         increased_fans = self.c.get_incresed_fans()
-        if increased_fans > self.today_maximum:     # 当订阅人数增加时，播放hello音效
-            threading.Thread(target=self.play_sound).start()
-            self.today_maximum = increased_fans
+        if self.has_music and increased_fans > self.today_maximum:     # 当订阅人数增加时，播放hello音效
+                threading.Thread(target=self.play_audio).start()
+                self.today_maximum = increased_fans
         self.cur_num.set(increased_fans)
         self.label_text1.set('今日订阅:')
         self.label_text2.set('/'+str(self.goal))
 
+    def play_audio(self):
+        chunk = 1024
+        wf = wave.open('doorbell.wav', 'rb')
+        p = pyaudio.PyAudio()
 
-    def play_sound(self):
-        if self.has_music:
-            mixer.music.play()
+        stream = p.open(
+            format=p.get_format_from_width(wf.getsampwidth()),
+            channels=wf.getnchannels(),
+            rate=wf.getframerate(),
+            output=True)
+
+        data = wf.readframes(chunk)
+
+        while data != '':  # is_playing to stop playing
+            stream.write(data)
+            data = wf.readframes(chunk)
+
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
 
     def refresh(self,event):
         t = threading.Thread(target=self.print_fans)
@@ -85,7 +99,7 @@ class MainDisplay:
 
     def start_crawl(self):
         while True:
-            self.cur_num.set(self.c.get_incresed_fans())
+            self.print_fans()
             time.sleep(self.time_in_seconds)
 
     def print_total_fans(self):
