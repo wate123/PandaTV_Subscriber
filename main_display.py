@@ -19,7 +19,7 @@ class MainDisplay:
         # 设置GUI界面
         self.root = Tk()
         self.root.configure(background='#f3b513')
-        if os.path.isfile('doorbell.mp3'):      # 在载入音乐前检查音乐是否存在
+        if os.path.isfile('doorbell.wav'):      # 在载入音乐前检查音乐是否存在
             self.has_music = True
         else:   self.has_music = False
         ###########################     设置初始windows位置 ##################
