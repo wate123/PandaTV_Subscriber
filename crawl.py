@@ -5,7 +5,9 @@ class Crawl:
 
     def get_fans_str(self):
         '''刷新网页，返还str类型的访问数, i.e. '57' '''
-        request = urllib.request.Request(r'https://www.panda.tv/ajax_search?roomid='+self.room_id)
+        #Failed Link
+        # request = urllib.request.Request(r'https://www.panda.tv/ajax_search?roomid='+self.room_id)
+        request = urllib.request.Request(r'https://www.panda.tv/room_followinfo?&roomid=1778649')
         response = urllib.request.urlopen(request)
         html = response.read().decode('utf-8')      # read from html
         reg_fan = r'"fans":[0-9]+'
