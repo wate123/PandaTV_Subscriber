@@ -40,9 +40,7 @@ class MainDisplay:
         self.label_text2.set('/'+str(self.goal))
         objective_label = Label(left_frame,textvariable=self.label_text2,font="28",background='#f3b513')
         objective_label.grid(row=0,column=2,sticky='w')
-        # left_frame.columnconfigure(0,weight=4)     # 调整widget位置
-        # left_frame.columnconfigure(1,weight=2)
-        # left_frame.columnconfigure(2,weight=2)
+
 
         right_frame = Frame(self.root,background='#f3b513')  # 右边frame用于手动获取最新订阅量和当前订阅人数
         right_frame.grid(row=0,column=1)
