@@ -19,6 +19,7 @@ class SettingDisplay:
 
         self.count = 0
         self.room_id_entry_var = StringVar()
+        self.room_id_entry_var.set('1778649')
         self.refresh_time_entry_var = DoubleVar()
         self.goal_entry_var = StringVar()
 
